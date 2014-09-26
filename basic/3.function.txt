@@ -1,0 +1,28 @@
+========================================
+function
+========================================
+- syntax
+  function_name(Pattern, ..., PatternN) [when GuardSeq1] ->
+    Body1;
+    .....;
+  function_name(Pattern, ..., PatternN) [when GuardSeqN] ->
+    BodyN.
+
+- example
+  fact(0) -> 1;
+  fact(N) when N > 0 -> N * fact(N - 1).
+
+- tail recursion
+  - example
+    loop(N) ->
+      io:format("~w~n", [N]),
+      loop(N + 1).
+
+- built-in functions
+  - example
+    > tuple_size({a, b, c}).
+    3
+
+    > atom_to_list('Erlang').
+    "Erlang"
+========================================

@@ -1,0 +1,270 @@
+========================================
+Simple Integer Arithmetic
+========================================
+1> 2 + 3 * 4.
+14
+
+2> (2 + 3) * 4.
+20
+========================================
+
+========================================
+Variables
+========================================
+Note: All variable names must start with an uppercase letter.
+
+1> X = 123456789.
+123456789
+
+2> X.
+123456789
+
+3> X*X*X*X.
+232305722798259244150093798251441
+========================================
+
+========================================
+Floating-Point Numbers
+========================================
+1> 5/3.
+1.66667
+
+2> 4/2.
+2.00000
+
+3> 5 div 3.
+1
+
+4> 5 rem 3.
+2
+
+5> 4 div 2.
+2
+
+6> Pi = 3.14159.
+3.14159
+
+7> R = 5.
+5
+
+8> Pi * R * R.
+78.5397
+========================================
+
+========================================
+Tuples
+========================================
+1> Person = {person,
+             {name, joe},
+             {height, 1.82},
+             {footsize, 42},
+             {eyecolour, brown}}.
+
+2> F = {firstName, joe}.
+{firstName,joe}
+
+3> L = {lastName, armstrong}.
+{lastName,armstrong}
+
+4> P = {person, F, L}.
+{person,{firstName,joe},{lastName,armstrong}}
+
+- Extracting Values from Tuples
+If we want to extract some values from a tuple, we use the pattern
+matching operator =.
+
+1> Point = {point, 10, 45}.
+{point, 10, 45}.
+2> {point, X, Y} = Point.
+{point,10,45}
+3> X.
+10
+4> Y.
+45
+
+1> Person={person,{name,{first,joe},{last,armstrong}},{footsize,42}}.
+{person,{name,{first,joe},{last,armstrong}},{footsize,42}}
+2> {_,{_,{_,Who},_},_} = Person.
+{person,{name,{first,joe},{last,armstrong}},{footsize,42}}
+3> Who.
+joe
+========================================
+
+========================================
+Lists
+========================================
+1> ThingsToBuy = [{apples,10},{pears,6},{milk,3}].
+[{apples,10},{pears,6},{milk,3}]
+
+2> [1+7,hello,2-2,{cost, apple, 30-20},3].
+[8,hello,0,{cost,apple,10},3]
+
+- Defining Lists
+3> ThingsToBuy1 = [{oranges,4},{newspaper,1}|ThingsToBuy].
+[{oranges,4},{newspaper,1},{apples,10},{pears,6},{milk,3}]
+
+- Extracting Elements from a List
+4> [Buy1|ThingsToBuy2] = ThingsToBuy1.
+[{oranges,4},{newspaper,1},{apples,10},{pears,6},{milk,3}]
+5> Buy1.
+{oranges,4}
+6> ThingsToBuy2.
+[{newspaper,1},{apples,10},{pears,6},{milk,3}]
+7> [Buy2,Buy3|ThingsToBuy3] = ThingsToBuy2.
+{newspaper,1},{apples,10},{pears,6},{milk,3}]
+8> Buy2.
+{newspaper,1}
+9> Buy3.
+{apples,10}
+10> ThingsToBuy3.
+[{pears,6},{milk,3}]
+
+========================================
+
+========================================
+String
+========================================
+1> Name = "Hello".
+"Hello"
+2> [1,2,3].
+[1,2,3]
+3> [83,117,114,112,114,105,115,101].
+"Surprise"
+4> [1,83,117,114,112,114,105,115,101].
+[1,83,117,114,112,114,105,115,101].
+5> I = $s.
+115
+6> [I-32,$u,$r,$p,$r,$i,$s,$e].
+"Surprise"
+========================================
+
+========================================
+Module
+========================================
+- Modules are the basic unit of code in Erlang. All the functions we write
+are stored in modules. Modules are stored in files with .erl extensions.
+- Modules must be compiled before the code can be run. A compiled
+module has the extension .beam.
+
+**geometry.erl**
+-module(geometry).
+-export([area/1]).
+area({rectangle, Width, Ht}) -> Width * Ht;
+area({circle, R}) -> 3.14159 * R * R.
+****************
+
+1> c(geometry).
+{ok,geometry}
+2> geometry:area({rectangle, 10, 5}).
+50
+3> geometry:area({circle, 1.4}).
+6.15752
+
+**shop.erl**
+-module(shop).
+-export([cost/1]).
+
+cost(oranges) -> 5;
+cost(newspaper) -> 8;
+cost(apples) -> 2;
+cost(pears) -> 9;
+cost(milk) -> 7.
+****************
+
+1> c(shop).
+{ok,shop}
+2> shop:cost(apples).
+2
+3> shop:cost(oranges).
+5
+4> shop:cost(socks).
+
+**shop1.erl**
+-module(shop1).
+-export([total/1]).
+
+total([{What, N}|T]) -> shop:cost(What) * N + total(T);
+total([]) -> 0.
+****************
+
+1> c(shop1).
+{ok,shop1}
+2> shop1:total([]).
+0
+3> shop1:total([{milk,3}]).
+21
+4> shop1:total([{pears,6},{milk,3}]).
+75
+========================================
+
+========================================
+Funs
+========================================
+- funs are “anonymous” functions. They are called this because they have
+no name. 
+
+1> Z = fun(X) -> 2*X end.
+#Fun<erl_eval.6.56006484>
+2> Z(2).
+4
+3> Double = Z.
+#Fun<erl_eval.6.10732646>
+4> Double(4).
+8
+5> Hypot = fun(X, Y) -> math:sqrt(X*X + Y*Y) end.
+#Fun<erl_eval.12.115169474>
+6> Hypot(3,4).
+5.00000
+7> TempConvert = fun({c,C}) -> {f, 32 + C*9/5};
+7>                   ({f,F}) -> {c, (F-32)*5/9}
+7>               end.
+#Fun<erl_eval.6.56006484>
+8> TempConvert({c,100}).
+{f,212.000}
+9> TempConvert({f,212}).
+{c,100.000}
+10> TempConvert({c,0}).
+{f,32.0000}
+
+- Functions That Have Funs As Their Arguments
+11> L = [1,2,3,4].
+[1,2,3,4]
+12> lists:map(Double, L).
+[2,4,6,8].
+
+13> Even = fun(X) -> (X rem 2) =:= 0 end.
+#Fun<erl_eval.6.56006484>
+
+14> Even(8).
+true
+15> Even(7).
+false
+16> lists:map(Even, [1,2,3,4,5,6,8]).
+[false,true,false,true,false,true,true]
+17> lists:filter(Even, [1,2,3,4,5,6,8]).
+[2,4,6,8]
+
+- Functions That Return Funs
+1> Fruit = [apple,pear,orange].
+[apple,pear,orange]
+2> MakeTest = fun(L) -> (fun(X) -> lists:member(X, L) end) end.
+#Fun<erl_eval.6.56006484>
+3> IsFruit = MakeTest(Fruit).
+#Fun<erl_eval.6.56006484>
+4> IsFruit(pear).
+true
+5> IsFruit(apple).
+true
+6> IsFruit(dog).
+false
+7> lists:filter(IsFruit, [dog,orange,cat,apple,bear]).
+[orange,apple]
+
+1> Mult = fun(Times) -> ( fun(X) -> X * Times end ) end.
+#Fun<erl_eval.6.56006484>
+2> Triple = Mult(3).
+#Fun<erl_eval.6.56006484>
+3> Triple(5).
+15
+
+========================================

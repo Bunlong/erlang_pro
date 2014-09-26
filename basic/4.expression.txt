@@ -1,0 +1,369 @@
+========================================
+variable
+========================================
+- example
+  X
+  Name1
+  PhoneNumber
+  Phone_number
+  _
+  _Height
+  [H|_] = [1, , 2, 3]
+  member(_, []) -> [].
+  member(_Element, []) -> [].
+========================================
+
+========================================
+match
+========================================
+- syntax
+  Expr1 = Expr2
+
+- example
+  > {A, B} = {answer, 42}.
+  {answer, 42}
+
+  > A.
+  answer
+
+- function call
+  - syntax
+    ExprF(Expr1, ..., ExprN)
+    ExprM:ExprF(Expr1, ..., ExprN)
+  - example
+    Fun1 = fun(X) -> X + 1 end
+    Fun1(3)
+    => 4
+
+    Fun2 = {lists, append}
+    Fun2([1, 2], [3, 4])
+    => [1, 2, 3, 4]
+
+    fun lists:append/2([1, 2], [3, 4])
+    => [1, 2, 3, 4]
+========================================
+
+========================================
+if
+========================================
+- syntax
+  if
+    GuardSeq1 ->
+      Body1;
+      .....;
+    GuardSeqN ->
+      BodyN
+  end.
+
+- example
+  is_greater_than(X, Y) ->
+    if
+      X > Y ->
+        true;
+      true ->
+        false
+    end
+========================================
+
+========================================
+case
+========================================
+- syntax
+  case Expr of 
+    Pattern1 [when GuardSeq1] ->
+      Body1;
+      .....;
+    PatternN [when GuardSeqN] ->
+      BodyN
+  end
+
+- example
+  is_valid_signal(Signal) ->
+    case Signal of 
+      {signal, _What, _From, _To} ->
+        true;
+      {signal, _What, _To} ->
+        true;
+      _Else ->
+        false
+    end.
+========================================
+
+========================================
+send
+========================================
+- syntax
+  Expr1 ! Expr2
+
+- Expr1 must evalutate to a Pid
+========================================
+
+========================================
+receive
+========================================
+- syntax
+  receive
+    Pattern1 [when GuardSeq1] ->
+      Body1;
+      .....;
+    PatternN [when GuardSeqN] ->
+      BodyN
+  end
+
+- example
+  wait_for_on_hook() ->
+    receive
+      on_hook ->
+        disconnect(),
+        idle();
+      {connect, B} ->
+        B ! {busy, self()},
+        wait_for_on_hook()
+    end.
+========================================
+
+========================================
+receive expression with a timeout
+========================================
+- syntax
+  receive
+    Pattern1 [when GuardSeq1] ->
+      Body1;
+      .....;
+    PatternN [when GuardSeqN] ->
+      BodyN
+  after
+    ExprT ->
+      BodyT
+  end
+
+- example
+  wait_for_on_hook() ->
+    receive
+      on_hook ->
+        disconnect(),
+        idle();
+      {connect, B} ->
+        B ! {busy, self()},
+        wait_for_on_hook()
+    after
+      6000 ->
+        disconnect(),
+        error()
+    end.
+========================================
+
+========================================
+term comparison
+========================================
+- syntax
+  Expr1 op Expr2
+
+- 
+  ==  (equal to)
+  /=  (not equal to)
+  =<  (less than or equal to)
+  <   (less than)
+  >=  (greater than or equal to)
+  >   (greater than)
+  =:= (exactly equal to)
+  =/= (exactly not equal to)
+
+- example
+  > 1==1.0.
+  true
+
+  > 1=:=1.0.
+  false
+
+  > 1>a.
+  false
+========================================
+
+========================================
+arithmetic expression
+========================================
+- syntax
+  - op Expr
+  - Expr1 op Expr2
+
+- 
+  +
+  -
+  *
+  /
+  div
+  rem
+
+- example
+  > +1.
+  1
+
+  > -1.
+  -1
+
+  > 1+1.
+  2
+
+  > 4/2.
+  2.0
+
+  > 5 div 2.
+  2
+
+  > 5 rem 2.
+  1
+========================================
+
+========================================
+boolean expression
+========================================
+- syntax
+  - op Expr
+  - Expr1 op Expr2
+
+- 
+  not 
+  and
+  or
+
+- example
+  > not true.
+  false
+
+  > true and false.
+  false
+========================================
+
+========================================
+list operation
+========================================
+- syntax
+  - Expr1 ++ Expr2
+  - Expr1 -- Expr2
+
+- example
+  > [1, 2, 3] ++ [4, 5].
+  [1, , 2, 3, 4, 5]
+
+  > [1, 2, 3, 2, 1, 2] -- [2, 1, 2].
+  [3, 1, 2]
+========================================
+
+========================================
+fun expression
+========================================
+- syntax
+  fun
+    (Pattern11, ..., Pattern1N) [when GuardSeq1] ->
+      Body1;
+      .....;
+    (PatternK1, ..., PatternKN) [when GuardSeqK] ->
+      BodyK
+  end
+
+- example
+  > Fun1 = fun(X) -> X + 1 end.
+    #Fun<erl_eval.6.39074546>
+
+    > Fun1(2).
+    3
+
+    > Fun2 = fun (X) when X >= 5 -> gt; (X) -> lt end.
+    #Fun<erl_eval.6.39074546>
+
+    > Fun2(7).
+    gt
+========================================
+
+========================================
+catch and throw
+========================================
+- syntax
+  catch Expr
+
+- example
+  > catch 1 + 2.
+  3
+
+  > catch 1 + a.
+  {'EXIT',{badarith,[...]}}
+
+  > A = (catch 1 + 2.)
+  3
+
+  > catch throw(hello).
+  hello
+========================================
+
+========================================
+try
+========================================
+- example
+    termize_file(Name) ->
+      {ok, F} = file:open(Name, [read, binary]),
+      try
+        {ok, Bin} = file:read(F, 1024*1024),
+        binary_to_term(Bin)
+      after
+        file:close(F)
+      end.
+
+- example
+  try Expr
+  catch
+    throw:Term -> Term;
+    exit:Reason -> {'EXIT', Reason}
+    error:Reason -> {'EXIT', {Reason, erlang:get_stacktrace()}}
+  end
+========================================
+
+========================================
+block expression
+========================================
+- syntax
+  begin
+    Expr1,
+    .....,
+    ExprN
+  end
+
+- block expressions provide a way to group a sequence of expressions.
+- the return value is the value of the last expression ExprN.
+========================================
+
+========================================
+list comprehension
+========================================
+- syntax
+  [Expr || Qualifier1, ..., QualifierN]
+
+- example
+  > [X*2 || X <- [1, 2, 3]].
+  [2, 4, 6]
+========================================
+
+========================================
+guard sequence
+========================================
+- 
+  is_atom/1
+  is_boolean/1
+  is_float/1
+  is_function/1
+  is_integer/1
+  is_list/1
+  is_number/1
+  is_pid/1
+  is_tuple/1
+  
+- 
+  element(N, Tuple)
+  float(Term)
+  length(List)
+  node()
+  node(Pid|Ref|Port)
+  round(Number)
+  self()
+  size(Tuple)
+========================================

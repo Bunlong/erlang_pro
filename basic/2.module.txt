@@ -1,0 +1,11 @@
+========================================
+module
+========================================
+- erlang code is divided into modules.
+- a module consists of a sequence of attributes and function declarations, each terminated by period (.).
+- example
+  -module(m).
+  -export([fact/1]).
+  fact(0) -> 1;
+  fact(N) when N > 0 -> N * fact(N - 1).
+========================================
