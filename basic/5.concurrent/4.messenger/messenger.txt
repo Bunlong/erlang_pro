@@ -1,0 +1,14 @@
+We will make an extremely simple "messenger". The messenger is a program which allows users to log in on different nodes and send simple messages to each other.
+
+===============================================
+Before we start, let's note the following:
+===============================================
+  - This example will just show the message passing logic no attempt at all has been made to provide a nice graphical user interface 
+  - this can of course also be done in Erlang - but that's another tutorial.
+
+  - This sort of problem can be solved more easily if you use the facilities in OTP, which will also provide methods for updating code on the fly etc. But again, that's another tutorial.
+
+  - The first program we write will contain some inadequacies as regards handling of nodes which disappear, we will correct these in a later version of the program.
+===============================================
+
+We will set up the messenger by allowing "clients" to connect to a central server and say who and where they are. I.e. a user won't need to know the name of the Erlang node where another user is located to send a message.
