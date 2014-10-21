@@ -70,6 +70,3 @@ start_link() ->
 	Other ->
 	    io:format("Supervisor got ~p~n", [Other])
     end.
-    
-    
-    
