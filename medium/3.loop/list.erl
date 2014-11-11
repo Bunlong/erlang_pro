@@ -1,6 +1,12 @@
 -module(list).
 -export([loop/1, put/1, get/1, handle_call/2, start/0, start_link/0]).
 
+%% list:start().
+%% list:put(a).
+%% list:put(b).
+%% list:put(c).
+%% list:get(a).
+
 put(Item) ->
     test ! {put, Item, self()},
     receive
