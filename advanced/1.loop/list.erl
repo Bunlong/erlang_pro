@@ -1,6 +1,11 @@
 -module(list).
 -export([put/1, get/1, loop/1, start/0, start_link/0]).
 
+%% list:start().
+%% list:put(a).
+%% list:put(b).
+%% list:get(b).
+
 put(Item) ->
     test ! {put, Item, self()},
     receive
@@ -70,4 +75,3 @@ start_link() ->
 	Other ->
 	    io:format("supervisor got ~p~n", [Other])
     end.
-
