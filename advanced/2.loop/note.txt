@@ -1,0 +1,18 @@
+==========================================================
+keysearch(Key, N, TupleList) -> {value, Tuple} | false
+==========================================================
+Searches the list of tuples TupleList for a tuple whose Nth element compares equal to Key. Returns {value, Tuple} if such a tuple is found, otherwise false.
+==========================================================
+
+==========================================================
+keystore(Key, N, TupleList1, NewTuple) -> TupleList2
+==========================================================
+Returns a copy of TupleList1 where the first occurrence of a tuple T whose Nth element compares equal to Key is replaced with NewTuple, if there is such a tuple T. If there is no such tuple T a copy of TupleList1 where [NewTuple] has been appended to the end is returned.
+==========================================================
+
+> super:start().
+> server:put(a).
+> server:put(a).
+> server:put(b).
+> server:put(c).
+> server:get(a).
