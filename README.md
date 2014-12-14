@@ -1,4 +1,4 @@
-erlang_pro
+Erlang Pro
 ==========
 
-bunlong erlang algorithm
+The document about learning Erlang programming by Bunlong VAN.
