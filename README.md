@@ -1,4 +1,4 @@
 Erlang Pro
 ==========
 
-The document about learning Erlang programming by Bunlong VAN.
+The document about learning Erlang programming language by Bunlong VAN.
