@@ -1,10 +1,10 @@
 %%%-------------------------------------------------------------------
 %%% @author Bunlong <bunlong.van@gmail.com>
-%%% @copyright (C) 2014, Bunlong
+%%% @copyright (C) 2015, Bunlong
 %%% @doc
 %%%
 %%% @end
-%%% Created : 04 Jan 2014 by Bunlong <bunlong.van@gmail.com>
+%%% Created : 04 Jan 2015 by Bunlong <bunlong.van@gmail.com>
 %%%-------------------------------------------------------------------
 -module(db).
 -include("db.hrl").
