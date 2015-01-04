@@ -1,0 +1,3 @@
+-record (user, {name, password, admin, job}).
+-record (job, {id, title, description}).
+-record (translation, {id, job_id, original, translated, enterby, enteron, checkby, checkon}).

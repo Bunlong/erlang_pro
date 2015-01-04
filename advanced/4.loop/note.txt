@@ -1,0 +1,27 @@
+1.  create folder mnesia
+2.  erl -sname temp - mnesia '"mnesia"'
+3.  net_adm:ping(temp@hdora).
+4.  mnesia:create_schema([node()|nodes()]).
+5.  mnesia:start().
+6.  mnesia:info().
+7.  create a file name: db_test.hrl
+8.  create a file name: db_test.erl
+    Erlang -> Skeletons -> Library module
+9.  l(db_test).
+10. db_test:create_table().
+11. rr("db_test.hrl").
+12. mnesia:dirty_write(#user{name="Bunlong", password="123", job=[]}).
+13. mnesia:dirty_read(user, "Bunlong").
+14. db_test:create_table().
+15. db_test:add_record(#job{id=1, title="Software Engineer", description="Software Engineer"}).
+
+=================================================
+To load qlc.hrl
+=================================================
+1.  locate qlc.hrl
+2.  vim db_test.erl 
+    -include("/usr/lib/erlang/lib/stdlib-1.19.4/include/qlc.hrl").
+=================================================
+
+mnesia:change_config(extra_db_nodes, temp@ng_sophy).
+mnesia:table_info(Table,where_to_commit).
